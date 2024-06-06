@@ -21,7 +21,7 @@ body {
     color: #3e8e41;
     max-width: 90%;
     margin: 40px auto;
-    padding: 20px;
+    padding: 100px;
     background: linear-gradient(135deg, #e4f3d8 0%, #c9eac4 100%);
     border: 1px solid #ddd;
     border-radius: 15px;
@@ -63,7 +63,24 @@ body {
   }
   
   .result-container {
+    display: none;
     margin-top: 20px;
+  }
+  
+  .loading-spinner {
+    display: none;
+    margin: 20px auto;
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid #3e8e41;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
   
   #computer-choice,
@@ -77,20 +94,15 @@ body {
   #result {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #0f5110ba;
+    color: #3e8e41;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   }
-  .result-container {
-    display: none;
-    margin-top: 20px;
-  }
-  
   
   /* Media Queries for Mobile Responsiveness */
   @media (max-width: 768px) {
     .game-container {
-      max-width: 120%;
-      padding: 15px;
+      max-width: 100%;
+      padding: 50px;
     }
     
     #play {
@@ -100,6 +112,7 @@ body {
     }
   
     .choice-container {
+      
       flex-direction: column;
       gap: 10px;
     }
