@@ -4,8 +4,12 @@ const resultDisplay = document.getElementById('result');
 const scoreDisplay = document.getElementById('score');
 const playButton = document.getElementById('play');
 const choices = document.getElementsByName('choice');
-const resultContainer = document.querySelector('.result-container');
-const loadingSpinner = document.getElementById('loading-spinner');
+const resultContainer = document.getElementById('result-container');
+const loadingResult = document.getElementById('loading-result');
+const initialLoader = document.getElementById('initial-loader');
+const mainContent = document.getElementById('main-content');
+const progressBar = document.getElementById('progress');
+const resultSpinner = document.getElementById('result-spinner');
 const possibleChoices = ['rock', 'paper', 'scissors'];
 
 let scorePlayer = 0;
@@ -31,7 +35,7 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function game() {
-  playButton.addEventListener('click', (e) => {
+  playButton.addEventListener('click', () => {
     const selected = Array.from(choices).filter((b) => b.checked);
     if (selected.length === 0) {
       alert("Please select a choice!");
@@ -40,10 +44,15 @@ function game() {
     const playerSelection = selected[0].value;
     const computerSelection = getComputerChoice();
 
-    loadingSpinner.style.display = 'block';
+    loadingResult.style.display = 'block';
     resultContainer.style.display = 'none';
+    resultSpinner.style.display = 'block';
 
     setTimeout(() => {
+      resultSpinner.style.display = 'none';
+      loadingResult.style.display = 'none';
+      resultContainer.style.display = 'block';
+
       addTextToSpan(yourChoice, playerSelection);
       addTextToSpan(compChoice, computerSelection);
 
@@ -57,10 +66,7 @@ function game() {
       }
 
       addTextToSpan(scoreDisplay, `You: ${scorePlayer}, Computer: ${scoreComputer}`);
-
-      loadingSpinner.style.display = 'none';
-      resultContainer.style.display = 'block';
-    }, 2000); // Delay for 2 seconds to show the loading spinner
+    }, 2000); // Simulating a delay for the result
   });
 }
 
@@ -68,4 +74,18 @@ function addTextToSpan(span, text) {
   span.textContent = text;
 }
 
+function showInitialLoader() {
+  let width = 0;
+  const interval = setInterval(() => {
+    width += 40;
+    progressBar.style.width = width + '%';
+    if (width >= 225) {
+      clearInterval(interval);
+      initialLoader.style.display = 'none';
+      mainContent.style.display = 'block';
+    }
+  }, 500);
+}
+
+showInitialLoader();
 game();
