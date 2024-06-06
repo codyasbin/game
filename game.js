@@ -4,7 +4,8 @@ const resultDisplay = document.getElementById('result');
 const scoreDisplay = document.getElementById('score');
 const playButton = document.getElementById('play');
 const choices = document.getElementsByName('choice');
-const resultContainer = document.querySelector('.result-container'); // Get the result container
+const resultContainer = document.querySelector('.result-container');
+const loadingSpinner = document.getElementById('loading-spinner');
 const possibleChoices = ['rock', 'paper', 'scissors'];
 
 let scorePlayer = 0;
@@ -39,20 +40,27 @@ function game() {
     const playerSelection = selected[0].value;
     const computerSelection = getComputerChoice();
 
-    addTextToSpan(yourChoice, playerSelection);
-    addTextToSpan(compChoice, computerSelection);
+    loadingSpinner.style.display = 'block';
+    resultContainer.style.display = 'none';
 
-    const result = playRound(playerSelection, computerSelection);
-    addTextToSpan(resultDisplay, result);
+    setTimeout(() => {
+      addTextToSpan(yourChoice, playerSelection);
+      addTextToSpan(compChoice, computerSelection);
 
-    if (result === "You win!") {
-      scorePlayer++;
-    } else if (result === "You lose!") {
-      scoreComputer++;
-    }
+      const result = playRound(playerSelection, computerSelection);
+      addTextToSpan(resultDisplay, result);
 
-    addTextToSpan(scoreDisplay, `You: ${scorePlayer}, Computer: ${scoreComputer}`);
-    resultContainer.style.display = 'block'; // Show the result container
+      if (result === "You win!") {
+        scorePlayer++;
+      } else if (result === "You lose!") {
+        scoreComputer++;
+      }
+
+      addTextToSpan(scoreDisplay, `You: ${scorePlayer}, Computer: ${scoreComputer}`);
+
+      loadingSpinner.style.display = 'none';
+      resultContainer.style.display = 'block';
+    }, 2000); // Delay for 2 seconds to show the loading spinner
   });
 }
 
